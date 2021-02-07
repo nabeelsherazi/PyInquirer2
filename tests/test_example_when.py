@@ -9,7 +9,7 @@ example_app = create_example_fixture('examples/when.py')
 
 def test_when_bacon(example_app):
     example_app.expect('? Do you like bacon?  (Y/n)')
-    example_app.write(keys.ENTER)
+    example_app.writeline('')
 
     example_app.expect(
         textwrap.dedent("""\
