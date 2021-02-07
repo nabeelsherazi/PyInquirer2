@@ -7,7 +7,7 @@ PyInquirer2
 
 PyInquirer2 is fork from `PyInquirer <https://github.com/CITGuru/PyInquirer>`__, PyInquirer2 is a collection of common interactive command line user interfaces. 
 
-PyInquirer2 is comming! 
+PyInquirer2 is coming! 
 -----------------
 
 Table of Contents
