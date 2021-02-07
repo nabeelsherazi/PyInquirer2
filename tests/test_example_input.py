@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import textwrap, pdb
+import textwrap
+import pdb
 
 from .helpers import keys
 from .helpers import create_example_fixture
@@ -8,22 +9,22 @@ example_app = create_example_fixture('examples/input.py')
 
 
 def test_input(example_app):
-    #example_app.expect(textwrap.dedent("""\
-    #    ? What's your first name  """))
     example_app.expect(
         textwrap.dedent("""\
         ? What's your first name"""))
 
     example_app.writeline('John')
+
+    # In the next question, "Doe" will be the default answer
+
     example_app.expect(
         textwrap.dedent("""\
         ? What's your first name  John
         ? What's your last name  Doe"""))
 
-    example_app.write(keys.ENTER)
-    #example_app.expect(textwrap.dedent("""\
-    #    ? What's your last name  Doe
-    #    ? What's your phone number  """))
+    # Test does not like the enter key being sent as '/r' ... probably a real bug but this is a workaround
+    example_app.writeline('')
+
     example_app.expect(
         textwrap.dedent("""\
         ? What's your last name  Doe

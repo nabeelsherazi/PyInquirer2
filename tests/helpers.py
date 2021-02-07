@@ -2,7 +2,8 @@
 """
 Common test functionality
 """
-import os, pdb
+import os
+import pdb
 import sys
 import codecs
 import time
@@ -66,8 +67,8 @@ def feed_app_with_input(type, message, text, **kwargs):
     try:
         with create_app_session(input=inp, output=DummyOutput()) as session:
             application = getattr(prompts, type).question(message, **kwargs)
-            #print(application.input)
-            #breakpoint()
+            # print(application.input)
+            # breakpoint()
 
             if isinstance(application, Application):
                 result = application.run()
@@ -81,7 +82,7 @@ def feed_app_with_input(type, message, text, **kwargs):
 def remove_ansi_escape_sequences(text):
     # http://stackoverflow.com/questions/14693701/how-can-i-remove-the-ansi-escape-sequences-from-a-string-in-python
     # remove all ansi escape sequences
-    #return regex.sub(r'(\x9b|\x1b\[)[0-?]*[ -\/]*[@-~]|[ ]*\r', '', text)
+    # return regex.sub(r'(\x9b|\x1b\[)[0-?]*[ -\/]*[@-~]|[ ]*\r', '', text)
     text = regex.sub(r'(\x9b|\x1b\[)[0-?]*[ -\/]*[@-~]', '', text)
     text = regex.sub(r'[ \r]*\n', '\n', text)  # also clean up the line endings
 
@@ -108,6 +109,7 @@ class SimplePty(PtyProcess):
     This class exposes a similar interface to :class:`PtyProcess`, but its read
     methods return unicode, and its :meth:`write` accepts unicode.
     """
+
     def __init__(self, pid, fd, encoding='utf-8', codec_errors='strict'):
         super(SimplePty, self).__init__(pid, fd)
         self.encoding = encoding
@@ -123,13 +125,13 @@ class SimplePty(PtyProcess):
 
         The size argument still refers to bytes, not unicode code points.
         """
-        #pdb.set_trace()
+        # pdb.set_trace()
         b = super(SimplePty, self).read(size)
         if not b:
             return ''
         if self.skip_cr:
             b = b.replace(b'\r', b'')
-        #if self.skip_ansi:
+        # if self.skip_ansi:
         #    b = remove_ansi_escape_sequences(b)
         return self.decoder.decode(b, final=True)
 
@@ -223,7 +225,7 @@ class SimplePty(PtyProcess):
             else:
                 # do not eat up CPU when waiting for the timeout to expire
                 time.sleep(self.timeout / 1000.0)
-        #print(repr(buf))  # debug ansi code handling
+        # print(repr(buf))  # debug ansi code handling
         assert buf == text
 
     def expect_regex(self, pattern):
@@ -241,7 +243,8 @@ class SimplePty(PtyProcess):
                     buf = remove_ansi_escape_sequences(buf + self.read())
                 except EOFError:
                     assert prog.match(buf) is not None, \
-                        'output was:\n%s\nexpect regex pattern:\n%s' % (buf, pattern)
+                        'output was:\n%s\nexpect regex pattern:\n%s' % (
+                            buf, pattern)
                 if prog.match(buf):
                     return True
             else:
@@ -258,9 +261,10 @@ def create_example_fixture(example):
     :return: pytest fixture
     """
     @pytest.fixture
-    def example_app():
-        p = SimplePty.spawn(['python', example])
+    def example_app(request):
+        p = SimplePty.spawn(['python3', example], cwd=os.path.join(request.fspath.dirname, ".."))
         yield p
+
         # it takes some time to collect the coverage data
         # if the main process exits too early the coverage data is not available
         time.sleep(p.delayafterterminate)
@@ -268,7 +272,7 @@ def create_example_fixture(example):
             p.sendintr()  # in case the subprocess was not ended by the test
         except OSError as e:
             pass
-            #if e.errno != 5:
+            # if e.errno != 5:
             #    raise
         p.wait()  # without wait() the coverage info never arrives
 
