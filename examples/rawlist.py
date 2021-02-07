@@ -3,8 +3,7 @@
 * example for rawlist question type
 * run example by typing `python example/rawlist.py` in your console
 """
-from __future__ import print_function, unicode_literals
-
+import add_to_path
 from inquirer2 import prompt, print_json, Separator
 from style import custom_style_2
 

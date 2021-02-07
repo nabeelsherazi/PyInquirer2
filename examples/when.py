@@ -2,15 +2,15 @@
 """
 When example
 """
-from __future__ import print_function, unicode_literals
+import add_to_path
 from inquirer2 import prompt, print_json
 
 from style import custom_style_2
 
 
-def dislikes_bacon(answers):
+def dislikes_bacon(a):
     # demonstrate use of a function... here a lambda function would be enough
-    return not answers['bacon']
+    return not a['bacon']
 
 
 questions = [
@@ -23,7 +23,7 @@ questions = [
         'type': 'input',
         'name': 'favorite',
         'message': 'Bacon lover, what is your favorite type of bacon?',
-        'when': lambda answers: answers['bacon']
+        'when': lambda a: a['bacon']
     },
     {
         'type': 'confirm',
@@ -36,7 +36,7 @@ questions = [
         'type': 'input',
         'name': 'favorite',
         'message': 'Whew! What is your favorite type of pizza?',
-        'when': lambda answers: answers.get('pizza', False)
+        'when': lambda a: a.get('pizza', False)
     }
 ]
 

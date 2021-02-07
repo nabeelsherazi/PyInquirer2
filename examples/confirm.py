@@ -3,6 +3,7 @@
 * Confirm question example
 * run example by typing `python example/confirm.py` in your console
 """
+import add_to_path
 from pprint import pprint
 
 from inquirer2 import prompt

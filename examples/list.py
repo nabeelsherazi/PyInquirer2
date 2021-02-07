@@ -2,7 +2,7 @@
 """
 list prompt example
 """
-from __future__ import print_function, unicode_literals
+import add_to_path
 from pprint import pprint
 
 from inquirer2 import prompt, Separator

@@ -3,8 +3,8 @@
 * Checkbox question example
 * run example by typing `python example/checkbox.py` in your console
 """
+import add_to_path
 from pprint import pprint
-
 from inquirer2 import prompt, Separator
 
 from style import custom_style_2

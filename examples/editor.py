@@ -2,6 +2,7 @@
 """
 * Editor prompt example
 """
+import add_to_path
 from pprint import pprint
 from inquirer2 import prompt, print_json
 

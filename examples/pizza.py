@@ -3,7 +3,7 @@
 * Pizza delivery prompt example
 * run example by writing `python example/pizza.py` in your console
 """
-from __future__ import print_function, unicode_literals
+import add_to_path
 import regex
 from pprint import pprint
 

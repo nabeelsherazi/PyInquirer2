@@ -3,7 +3,7 @@
 * Input prompt example
 * run example by writing `python example/input.py` in your console
 """
-from __future__ import print_function, unicode_literals
+import add_to_path
 import regex
 from pprint import pprint
 
@@ -44,7 +44,7 @@ questions = [{
     'type': 'input',
     'name': 'phone',
     'message': 'What\'s your phone number',
-    'validate': PhoneNumberValidator
+    #'validate': PhoneNumberValidator
 }]
 
 answers = prompt.prompt(questions, style=custom_style_2)
