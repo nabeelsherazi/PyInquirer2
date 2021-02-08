@@ -7,12 +7,11 @@ os:
 
 python:
   - 3.6
-  - 3.7
   - 3.8
 
 before_install:
   # Strangely enough numpy is already installed on Travis's VMs
-  - pip install -r requirements.txt.dev
+  - pip install -r requirements-dev.txt
 
 install:
   - pip install -e .
