@@ -8,6 +8,7 @@ import sys
 import codecs
 import time
 import select
+from typing import Type
 
 import pytest
 from ptyprocess import PtyProcess
@@ -74,6 +75,8 @@ def feed_app_with_input(type, message, text, **kwargs):
                 result = application.run()
             elif isinstance(application, PromptSession):
                 result = application.prompt()
+            else:
+                raise ValueError("Invalid application type")
             return result
     finally:
         inp.close()
@@ -157,6 +160,8 @@ class SimplePty(PtyProcess):
         """
         if isinstance(s, basestring):
             b = s.encode(self.encoding)
+        else:
+            raise TypeError("Trying to write something that's not a string")
         count = super(SimplePty, self).write(b)
         return count
 
@@ -262,7 +267,8 @@ def create_example_fixture(example):
     """
     @pytest.fixture
     def example_app(request):
-        p = SimplePty.spawn(['python3', example], cwd=os.path.join(request.fspath.dirname, ".."))
+        p = SimplePty.spawn(['python3', example], cwd=os.path.join(
+            request.fspath.dirname, ".."))
         yield p
 
         # it takes some time to collect the coverage data

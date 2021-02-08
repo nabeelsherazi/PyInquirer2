@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import textwrap
 import pdb
+import time
 
 from .helpers import keys
 from .helpers import create_example_fixture
@@ -22,8 +23,7 @@ def test_input(example_app):
         ? What's your first name  John
         ? What's your last name  Doe"""))
 
-    # Test does not like the enter key being sent as '/r' ... probably a real bug but this is a workaround
-    example_app.writeline('')
+    example_app.write(keys.ENTER)
 
     example_app.expect(
         textwrap.dedent("""\
